@@ -13,6 +13,10 @@ node {
       echo "CHANGE_ID: ${env.CHANGE_ID}"
     }
 
+    stage('Checkout') {
+      checkout scm
+    }
+
     stage('Build') {
       echo 'Build process goes here!'
 
