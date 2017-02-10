@@ -19,9 +19,7 @@ node {
 
     if (params.stable_tag) {
       echo "This is a release to production."
-      withEnv(["STABLE_TAG=${params.stable_tag}"]) {
-        sh 'scripts/release.sh'
-      }
+      sh "STABLE_TAG=${params.stable_tag} scripts/release.sh"
     } else if (env.BRANCH_NAME != 'master') {
       echo "Here we're building a PR/branch. Commit: ${env.GIT_COMMIT}"
       sh 'scripts/branch.sh'
