@@ -18,7 +18,7 @@ node {
     }
 
     if (params.stable_tag) {
-      echo "This is a release to production.'
+      echo "This is a release to production."
       withEnv(["STABLE_TAG=${params.stable_tag}"]) {
         sh 'scripts/release.sh'
       }
