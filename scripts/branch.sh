@@ -2,4 +2,4 @@
 
 set -exuo pipefail
 
-echo "Branch: $GIT_BRANCH_NAME (commit: $GIT_COMMIT)"
+echo "Branch: $BRANCH_NAME (commit: $GIT_COMMIT)"
