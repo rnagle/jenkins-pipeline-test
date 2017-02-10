@@ -7,10 +7,6 @@ node {
       step([$class: 'WsCleanup'])
     }
 
-    stage('Checkout') {
-      checkout scm
-    }
-
     stage('Build') {
       echo 'Build process goes here!'
     }
