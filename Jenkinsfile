@@ -10,14 +10,14 @@ node {
         script: 'git rev-parse HEAD'
       ).trim()
 
-      env.GIT_BRANCH = sh(
+      env.GIT_BRANCH_NAME = sh(
         returnStdout: true,
         script: 'git rev-parse --abbrev-ref HEAD'
       ).trim()
     }
 
     stage('Build') {
-      if (env.GIT_BRANCH != 'master') {
+      if (env.GIT_BRANCH_NAME != 'master') {
         echo "Here we're building a PR/branch. Commit: ${env.GIT_COMMIT}"
         sh 'scripts/branch.sh'
       } else {
