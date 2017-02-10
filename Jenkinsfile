@@ -21,7 +21,7 @@ node {
         echo "Here we're building a PR/branch. Commit: ${env.GIT_COMMIT}"
         sh 'scripts/branch.sh'
       } else {
-        echo "Here we're building the master branch."
+        echo "Here we're building the master/base branch."
         sh 'scripts/master.sh'
       }
     }
