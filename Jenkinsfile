@@ -16,11 +16,18 @@ node {
     stage('Build') {
       echo 'Build process goes here!'
 
-      echo "Current build display name:"
-      echo currentBuild.displayName
+      commit = sh(
+        returnStdout: true,
+        script: 'git rev-parse HEAD'
+      ).trim()
 
-      if (env.BRANCH_NAME != 'master' && env.CHANGE_ID) {
-        echo "Here we're building a PR/branch. Commit: ${env.CHANGE_ID}"
+      branch = sh(
+        returnStdout: true,
+        script: 'git rev-parse --abbrev-ref HEAD'
+      ).trim()
+
+      if (branch != 'master' && commit) {
+        echo "Here we're building a PR/branch. Commit: ${commit}"
       } else {
         echo "Here we're building the master branch."
       }
