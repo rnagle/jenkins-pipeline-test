@@ -2,6 +2,18 @@ node {
   currentBuild.result = 'SUCCESS'
 
   try {
+    stage('Debug') {
+      echo "DEBUG: params"
+      for ( e in params ) {
+        println "key = ${e.key}, value = ${e.value}"
+      }
+
+      echo "DEBUG: env"
+      for ( e in env ) {
+        println "key = ${e.key}, value = ${e.value}"
+      }
+    }
+
     stage('Build') {
       echo 'Build process goes here!'
     }
