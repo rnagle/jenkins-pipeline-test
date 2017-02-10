@@ -16,6 +16,8 @@ node {
     stage('Build') {
       echo 'Build process goes here!'
 
+      sh('ls -hl .')
+
       commit = sh(
         returnStdout: true,
         script: 'git rev-parse HEAD'
