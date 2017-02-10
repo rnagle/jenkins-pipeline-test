@@ -1,3 +1,9 @@
+properties([
+  parameters([
+    string(defaultValue: '', description: '', name: 'stable_tag')
+  ])
+])
+
 node {
   currentBuild.result = 'SUCCESS'
 
@@ -9,21 +15,19 @@ node {
         returnStdout: true,
         script: 'git rev-parse HEAD'
       ).trim()
-
-      env.GIT_BRANCH_NAME = sh(
-        returnStdout: true,
-        script: 'git rev-parse --abbrev-ref HEAD'
-      ).trim()
     }
 
-    stage('Build') {
-      if (!['master', 'HEAD'].contains(env.GIT_BRANCH_NAME)) {
-        echo "Here we're building a PR/branch. Commit: ${env.GIT_COMMIT}"
-        sh 'scripts/branch.sh'
-      } else {
-        echo "Here we're building the master/base branch."
-        sh 'scripts/master.sh'
+    if (params.stable_tag) {
+      echo "This is a release to production.'
+      withEnv(["STABLE_TAG=${params.stable_tag}"]) {
+        sh 'scripts/release.sh'
       }
+    } else if (env.BRANCH_NAME != 'master') {
+      echo "Here we're building a PR/branch. Commit: ${env.GIT_COMMIT}"
+      sh 'scripts/branch.sh'
+    } else {
+      echo "Here we're building the master/base branch."
+      sh 'scripts/master.sh'
     }
   }
   catch(err) {

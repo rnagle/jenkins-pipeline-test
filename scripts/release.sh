@@ -2,4 +2,4 @@
 
 set -exuo pipefail
 
-echo "TKTK"
+echo "Deploy tag: $STABLE_TAG"
