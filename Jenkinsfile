@@ -17,7 +17,7 @@ node {
     }
 
     stage('Build') {
-      if (env.GIT_BRANCH_NAME != 'master') {
+      if (!['master', 'HEAD'].contains(env.GIT_BRANCH_NAME) {
         echo "Here we're building a PR/branch. Commit: ${env.GIT_COMMIT}"
         sh 'scripts/branch.sh'
       } else {
