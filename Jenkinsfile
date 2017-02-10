@@ -19,8 +19,10 @@ node {
     stage('Build') {
       if (env.GIT_BRANCH != 'master') {
         echo "Here we're building a PR/branch. Commit: ${env.GIT_COMMIT}"
+        sh 'scripts/branch.sh'
       } else {
         echo "Here we're building the master branch."
+        sh 'scripts/master.sh'
       }
     }
   }
