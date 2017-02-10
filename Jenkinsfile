@@ -8,10 +8,9 @@ node {
         println "key = ${e.key}, value = ${e.value}"
       }
 
-      echo "DEBUG: env"
-      for ( e in env ) {
-        println "key = ${e.key}, value = ${e.value}"
-      }
+      echo "DEBUG: branch and change id"
+      echo env.BRANCH_NAME
+      echo env.CHANGE_ID
     }
 
     stage('Build') {
