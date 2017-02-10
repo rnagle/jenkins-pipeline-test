@@ -9,12 +9,18 @@ node {
       }
 
       echo "DEBUG: branch and change id"
-      echo env.BRANCH_NAME
-      echo env.CHANGE_ID
+      echo "BRANCH_NAME: ${env.BRANCH_NAME}"
+      echo "CHANGE_ID: ${env.CHANGE_ID}"
     }
 
     stage('Build') {
       echo 'Build process goes here!'
+
+      if (env.BRANCH_NAME != 'master' && env.CHANGE_ID) {
+        echo "Here we're building a PR/branch. Commit: ${env.CHANGE_ID}"
+      } else {
+        echo "Here we're building the master branch."
+      }
     }
   }
   catch(err) {
