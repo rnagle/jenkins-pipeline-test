@@ -16,6 +16,9 @@ node {
     stage('Build') {
       echo 'Build process goes here!'
 
+      echo "Current build display name:"
+      echo currentBuild.displayName
+
       if (env.BRANCH_NAME != 'master' && env.CHANGE_ID) {
         echo "Here we're building a PR/branch. Commit: ${env.CHANGE_ID}"
       } else {
