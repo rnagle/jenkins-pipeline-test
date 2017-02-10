@@ -20,7 +20,7 @@ node {
     throw err
   }
   finally {
-    if (currentBuild.result == 'SUCCESS') {
+    if (currentBuild.result == 'SUCCESS' && currentBuild.previousBuild) {
       if (["FAILURE", "UNSTABLE"].contains(currentBuild.previousBuild.result)) {
         echo 'A (naive) indication that the build is stable again.'
       }
