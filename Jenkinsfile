@@ -7,6 +7,9 @@ properties([
 node {
   currentBuild.result = 'SUCCESS'
 
+  def nodeHome = tool 'NodeJS 4.2.6'
+  env.PATH = "${nodeHome}/bin:${env.PATH}"
+
   try {
     stage('Checkout') {
       checkout scm
@@ -22,20 +25,10 @@ node {
       sh "STABLE_TAG=${params.stable_tag} scripts/release.sh"
     } else if (env.BRANCH_NAME != 'master') {
       echo "Here we're building a PR/branch. Commit: ${env.GIT_COMMIT}"
-      wrap([
-        $class: 'NodeJSBuildWrapper',
-        nodeJSInstallationName: 'NodeJS 4.2.6'
-      ]) {
-        sh 'scripts/branch.sh'
-      }
+      sh 'scripts/branch.sh'
     } else {
       echo "Here we're building the master/base branch."
-      wrap([
-        $class: 'NodeJSBuildWrapper',
-        nodeJSInstallationName: 'NodeJS 4.2.6'
-      ]) {
-        sh 'scripts/master.sh'
-      }
+      sh 'scripts/master.sh'
     }
   }
   catch(err) {
