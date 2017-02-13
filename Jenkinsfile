@@ -22,8 +22,10 @@ node {
       sh "STABLE_TAG=${params.stable_tag} scripts/release.sh"
     } else if (env.BRANCH_NAME != 'master') {
       echo "Here we're building a PR/branch. Commit: ${env.GIT_COMMIT}"
-      withEnv(["PATH=${tool 'NodeJS 4.2.6'}/bin:${env.PATH}"]) {
-        sh 'scripts/branch.sh'
+      wrap([$class: 'Xvfb']) {
+        withEnv(["PATH=${tool 'NodeJS 4.2.6'}/bin:${env.PATH}"]) {
+          sh 'scripts/branch.sh'
+        }
       }
     } else {
       echo "Here we're building the master/base branch."
