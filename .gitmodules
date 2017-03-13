@@ -1,0 +1,3 @@
+[submodule "test/rainbows"]
+	path = test/rainbows
+	url = https://github.com/rnagle/rainbows.git
